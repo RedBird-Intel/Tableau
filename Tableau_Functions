@@ -1,0 +1,26 @@
+
+// YTD Aggregation for any time series metric to give the YTD sum
+
+    IF [DATES Year]= YEAR(TODAY())THEN <Metric> ELSE 0 END 
+
+
+
+// LY_Total Aggregation for any time series metric to give a LY_Total sum
+
+    IF [DATES Year]= YEAR(TODAY()) - 1 THEN <Metric> ELSE 0 END 
+
+
+// LYTD_Total Aggregation for any time series metric to give a LYTD_Total sum
+
+        IF [DATES Year]= YEAR(TODAY()) - 1 AND 
+
+        [DATES Day of Year Nmbr] <= DATEPART('dayofyear', TODAY())
+
+        THEN [Website Clicks] ELSE 0 
+
+        END
+
+
+// % Change in YTD over LYT
+
+(SUM([YTD_<metric>]) - SUM([LYT_<metric>])) / SUM([LYT_<metric>])
